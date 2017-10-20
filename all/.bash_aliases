@@ -1,6 +1,6 @@
 
 alias ll='ls -lF'
-alias la='ls -A'
+alias la='ll -A'
 alias l='ls -CF'
 
 ### Replace Prompt
