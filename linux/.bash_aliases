@@ -43,7 +43,5 @@ git_prompt ()
 }
 
 # Thy holy prompt.
-#PROMPT_COMMAND='PS1="${c_user}\u${c_reset}@${c_host}\h${c_reset}:${c_path}\w${c_reset}$(git_prompt)\\$ "'
-PROMPT_COMMAND='PS1="${c_user}\u${c_reset}@${c_host}dell${c_reset}:${c_path}\w${c_reset}$(git_prompt)\\$ "'
-
+PROMPT_COMMAND='PS1="${c_user}\u${c_reset}@${c_host}\h${c_reset}:${c_path}\w${c_reset}$(git_prompt)\\$ "'
 
