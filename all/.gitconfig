@@ -1,0 +1,37 @@
+[user]
+	name = FIXME
+	email = FIXME
+[color]
+	status = auto
+	diff = auto
+	branch = auto
+	ui = true
+[alias]
+	ci = commit
+	st = status -s
+        stc = diff --name-status --cached
+	cl = clone
+	co = checkout
+	br = branch 
+	diff = diff --word-diff
+	dc = diff --cached
+	la = "!git config -l | grep alias | cut -c 7-"
+	assume = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
+	assumeall = "!git st -s | awk {'print $2'} | xargs git assume"
+	lasttag = describe --tags --abbrev=0
+	lt = describe --tags --abbrev=0
+	logtree = log --graph --oneline --decorate --all
+	changelog = !git log $(git lt)..HEAD --pretty=format:%cd\\ %s\\ [%an] --date=short
+[core]
+	excludesfile = "~/.gitexcludes"
+[push]
+	default = current
+[diff]
+	renames = copies
+[difftool]
+	prompt = false
+[merge "ours"]
+	driver = true
