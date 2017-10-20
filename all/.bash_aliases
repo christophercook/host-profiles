@@ -1,5 +1,7 @@
 
-
+alias ll='ls -lF'
+alias la='ls -A'
+alias l='ls -CF'
 
 ### Replace Prompt
 
