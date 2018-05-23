@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Rsync options
+#  * copy sub-directories
+#  * prevent overwriting existing files
+#  * list skipped files
+#  * 
+RSYNC_ARGS=" --ignore-existing --info=SKIP1 -rlpt"
+
+# Copy common files
+rsync $RSYNC_ARGS all/ $HOME/
+
+# Detect environment
+case "$(uname -s)" in
+  Linux*)   host=linux;;
+  Darwin*)  host=macOS;;
+  CYGWIN*)  host=cygwin;;
+  *)        host=UNKNOWN;;
+esac
+
+# Copy environment specific files
+if [ -d "$host" ]; then
+  rsync $RSYNC_ARGS $host/ $HOME/
+fi
+
+# Configure non-file specific linux preferences (may need tweaking for distro differences)
+if [ "$host" = "linux" ] && [ "$(which gsettings)" != "" ]; then
+
+  # set gnome terminal colors to tango dark scheme
+  profileId=$(sed -e "s/'//g" <<<$(gsettings get org.gnome.Terminal.ProfilesList default))
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ use-theme-colors false    
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ background-color 'rgb(46,52,54)'
+  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ foreground-color 'rgb(211,215,207)'
+
+  # set gedit color scheme to Monokai Extended
+  gsettings set org.gnome.gedit.preferences.editor scheme 'monokai-extended'
+
+fi
