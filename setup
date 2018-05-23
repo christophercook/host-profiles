@@ -2,9 +2,10 @@
 
 # Rsync options
 #  * copy sub-directories
+#  * copy symlinks
+#  * copy permissions and timestamps
 #  * prevent overwriting existing files
 #  * list skipped files
-#  * 
 RSYNC_ARGS=" --ignore-existing --info=SKIP1 -rlpt"
 
 # Copy common files
