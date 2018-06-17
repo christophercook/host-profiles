@@ -1,0 +1,4 @@
+# Tango Dark colors from Ubuntu
+export CLICOLOR=1
+export LSCOLORS='ExGxFxDxCxDxDxhbhdacEc'
+alias ls='ls -G'

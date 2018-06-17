@@ -9,7 +9,7 @@
 [alias]
 	ci = commit
 	st = status -s
-        stc = diff --name-status --cached
+  stc = diff --name-status --cached
 	cl = clone
 	co = checkout
 	br = branch 

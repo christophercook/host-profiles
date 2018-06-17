@@ -25,15 +25,23 @@ if [ -d "$host" ]; then
 fi
 
 # Configure non-file specific linux preferences (may need tweaking for distro differences)
-if [ "$host" = "linux" ] && [ "$(which gsettings)" != "" ]; then
+if [ "$host" = "linux" ]; then
+  if [ "$(which gsettings)" != "" ]; then
 
-  # set gnome terminal colors to tango dark scheme
-  profileId=$(sed -e "s/'//g" <<<$(gsettings get org.gnome.Terminal.ProfilesList default))
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ use-theme-colors false    
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ background-color 'rgb(46,52,54)'
-  gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ foreground-color 'rgb(211,215,207)'
+    # set gnome terminal colors to tango dark scheme
+    profileId=$(sed -e "s/'//g" <<<$(gsettings get org.gnome.Terminal.ProfilesList default))
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ use-theme-colors false    
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ background-color 'rgb(46,52,54)'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ foreground-color 'rgb(211,215,207)'
 
-  # set gedit color scheme to Monokai Extended
-  gsettings set org.gnome.gedit.preferences.editor scheme 'monokai-extended'
+    # set gedit color scheme to Monokai Extended
+    gsettings set org.gnome.gedit.preferences.editor scheme 'monokai-extended'
+  fi
+elif [ "$host" = "macOS" ]; then
+  # TODO: Configure iTerm profile
 
+  # Add bash_aliases dependency
+  if [ "$(grep 'source ~/.bash_aliases' ~/.bash_profile)" != "" ]; then
+    echo -e "\nif [ -f ~/.bash-aliases ]; then\n  source ~/.bash-aliases\nfi" > ~/.bash_profile
+  fi
 fi
