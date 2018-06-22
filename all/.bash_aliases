@@ -5,6 +5,16 @@ fi
 alias ll='ls -AlF'
 alias la='ll -A'
 
+# Set up AWS-CLI environment
+if [[ -n "$(which docker)" ]] && [[ -f ~/.aws_account ]]; then
+  source ~/.aws_account
+  if [[ -n "$AWS_ACCOUNT" ]] && [[ -n "$(which secret-tool)" ]]; then
+    export AWS_ACCESS_KEY_ID="$(secret-tool lookup type 'AWS ACCESS KEY ID' account $AWS_ACCOUNT)"
+    export AWS_SECRET_ACCESS_KEY="$(secret-tool lookup type 'AWS SECRET ACCESS KEY' account $AWS_ACCOUNT)"
+    alias aws='sudo docker run --rm -t $(tty &>/dev/null && echo "-i") -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" -v "$(pwd):/project" mesosphere/aws-cli'
+  fi
+fi
+
 ### Replace Prompt
 
 # Define prompt colors, if available.

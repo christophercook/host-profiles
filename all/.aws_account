@@ -1,0 +1,17 @@
+# If using Docker for aws-cli you can define an
+# AWS account in this file for use by the aliases
+# (defined in .bash_aliases). You must also ensure
+# that the account credentials (access id and
+# secret key) are stored in your keyring.
+
+# In Ubuntu key ids and secrets can be added to the
+# keyring with the secret-tool
+
+# secret-tool store --label='AWS ACCESS KEY ID for iam_user @ aws_account' \
+#   type 'AWS ACCESS KEY ID' account iam_user
+# secret-tool store --label='AWS SECRET ACCESS KEY for iam_user @ aws_account' \
+#   type 'AWS SECRET ACCESS KEY' account iam_user
+
+
+#export AWS_ACCOUNT=foo
+#export AWS_DEFAULT_REGION=us-east-1
