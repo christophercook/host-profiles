@@ -19,7 +19,7 @@ fi
 
 # Define prompt colors, if available.
 if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-  if [ "`id -u`" -eq 0 ]; then
+  if [ "$(id -u)" -eq 0 ]; then
     # Highligh root
     c_user='\[\e[1;31m\]'
   else
