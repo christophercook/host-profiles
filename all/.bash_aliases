@@ -5,6 +5,10 @@ fi
 alias ll='ls -AlF'
 alias la='ll -A'
 
+if [ -n $(which ip) ]; then
+  alias ip='ip -c'
+fi
+
 # Set up AWS-CLI environment
 if [[ -n "$(which docker)" ]] && [[ -f ~/.aws_account ]]; then
   source ~/.aws_account
