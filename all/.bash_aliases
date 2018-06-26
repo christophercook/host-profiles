@@ -1,10 +1,7 @@
-if [ -f ~/.lscolors ]; then
-  source ~/.lscolors
-fi
-
 alias ll='ls -AlF'
 alias la='ll -A'
 
+# Add color support to ip
 if [ -n $(which ip) ]; then
   alias ip='ip -c'
 fi
