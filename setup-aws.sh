@@ -24,26 +24,6 @@ if [ -n "$(which pip)" ];then
   # Re-load environment to detect awscli
   source ~/.bash_aliases
 
-#  # Set up awscli environment
-#  export PATH=$PATH:~/.local/bin
-#  complete -C '$HOME/.local/bin/aws_completer' aws
-
-#  if [ -f ~/.aws/profile ] && [ -n "$(cat ~/.aws/profile)" ]; then
-#    export AWS_PROFILE="$(cat ~/.aws/profile)"
-
-    # Check if access keys and secrets are stored in keyring
-#    AWS_ACCESS_KEY_ID="$(secret-tool lookup type 'AWS ACCESS KEY ID' account $AWS_PROFILE)"
-#    AWS_SECRET_ACCESS_KEY="$(secret-tool lookup type 'AWS SECRET ACCESS KEY' account $AWS_PROFILE)"
-#    if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
-#      export AWS_ACCESS_KEY_ID
-#      export AWS_SECRET_ACCESS_KEY
-#    else
-#      echo "Warning: no aws credentials were found in the keyring for $AWS_PROFILE"
-#    fi
-#  else
-#    echo "Warning: you should set a profile in ~/.aws/profile and add your credentials to the keyring"
-#  fi
-
 else
   echo "pip must be installed first."
 fi
