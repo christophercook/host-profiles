@@ -2,46 +2,37 @@ alias ll='ls -AlF'
 alias la='ll -A'
 
 # Add color support to ip
-if [ -n $(which ip) ]; then
+if [ -n "$(which ip)" ]; then
   alias ip='ip -c'
 fi
 
 # Set up AWS-CLI environment
+export PATH=$PATH:~/.local/bin
 if [ -n "$(which aws)" ]; then
-  # Add to path
-  export PATH=$PATH:$(dirname $(which aws))
   # Enable aws auto completion
-  if [ -n "$(which aws_completer)"]; then
-    complete -C '$(which aws_completer)' aws
+  if [ -n "$(which aws_completer)" ]; then
+    complete -C "$(which aws_completer)" aws
   fi
 
-  if [ -f ~/.aws/profile ] && [ -n "$(cat ~/.aws/profile)" ]; then
-    export AWS_PROFILE="$(cat ~/.aws/profile)"
+  if [ -s ~/.aws/profile ]; then
+    source ~/.aws/profile
 
-    # Check if access keys and secrets are stored in keyring
-    AWS_ACCESS_KEY_ID="$(secret-tool lookup type 'AWS ACCESS KEY ID' account $AWS_PROFILE)"
-    AWS_SECRET_ACCESS_KEY="$(secret-tool lookup type 'AWS SECRET ACCESS KEY' account $AWS_PROFILE)"
-    if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
-      export AWS_ACCESS_KEY_ID
-      export AWS_SECRET_ACCESS_KEY
-    else
-      echo "Warning: no aws credentials were found in the keyring for $AWS_PROFILE"
+    # TODO: support macOS keyring
+    if [[ -n "$AWS_PROFILE" ]] && [[ -n "$(which secret-tool)" ]]; then
+      export AWS_PROFILE
+
+      # Check if access keys and secrets are stored in keyring
+      AWS_ACCESS_KEY_ID="$(secret-tool lookup type 'AWS ACCESS KEY ID' account $AWS_PROFILE)"
+      AWS_SECRET_ACCESS_KEY="$(secret-tool lookup type 'AWS SECRET ACCESS KEY' account $AWS_PROFILE)"
+      if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
+        export AWS_ACCESS_KEY_ID
+        export AWS_SECRET_ACCESS_KEY
+      else
+        echo "Warning: no aws credentials were found in the keyring for $AWS_PROFILE"
+      fi
     fi
   else
-    echo "Warning: you should set a profile in ~/.aws/profile and add your credentials to the keyring"
-  fi
-fi
-
-if [ -f ~/.aws_account ]; then
-  source ~/.aws_account
-  # TODO: Support macOS keyring
-  if [[ -n "$AWS_ACCOUNT" ]] && [[ -n "$(which secret-tool)" ]]; then
-    export AWS_ACCESS_KEY_ID="$(secret-tool lookup type 'AWS ACCESS KEY ID' account $AWS_ACCOUNT)"
-    export AWS_SECRET_ACCESS_KEY="$(secret-tool lookup type 'AWS SECRET ACCESS KEY' account $AWS_ACCOUNT)"
-
-    if [[ -z "$(which aws)" ]] && [[ -n "$(which docker)" ]]; then
-      alias aws='sudo docker run --rm -t $(tty &>/dev/null && echo "-i") -e "AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}" -e "AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}" -e "AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}" -v "$(pwd):/project" mesosphere/aws-cli'
-    fi
+    echo "Warning: you should set a profile in ~/.aws/profile (e.g. echo username > ~/.aws/profile) and add your credentials to the keyring"
   fi
 fi
 
