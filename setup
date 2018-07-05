@@ -24,9 +24,9 @@ if [ -d "$host" ]; then
   rsync $RSYNC_ARGS $host/ $HOME/
 fi
 
-# Configure non-file specific linux preferences (may need tweaking for distro differences)
-if [ "$host" = "linux" ]; then
-  if [ "$(which gsettings)" != "" ]; then
+# Configure non-file specific linux preferences (needs tweaking to support non-debian distros)
+if [ "$host" = "linux" ] && [ "$(lsb_release -si)" = "Ubuntu" ]; then
+  if [ -n "$(which gsettings)" ]; then
 
     # set gnome terminal colors to tango dark scheme
     profileId=$(sed -e "s/'//g" <<<$(gsettings get org.gnome.Terminal.ProfilesList default))
@@ -37,6 +37,18 @@ if [ "$host" = "linux" ]; then
     # set gedit color scheme to Monokai Extended
     gsettings set org.gnome.gedit.preferences.editor scheme 'monokai-extended'
   fi
+
+  # Define the list of required repository packages, in roughly the order they should be installed
+  PACKAGES=( apt-transport-https ca-certificates curl vim git unzip vlc python-pip )
+
+  # Install base packages individually, instead of all together, so that we can check if they are
+  # installed and skip if they are installed which reduces output messaging.
+  for p in "${PACKAGES[@]}" ; do
+    if [ "$(dpkg -s ${p} 2> /dev/null | grep 'Status: ')" != "Status: install ok installed" ]; then
+      apt-get -y install ${p}
+    fi
+  done
+
 elif [ "$host" = "macOS" ]; then
   # TODO: Configure iTerm profile
 

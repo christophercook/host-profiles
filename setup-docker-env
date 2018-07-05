@@ -17,8 +17,7 @@ if [ "$(lsb_release -si)" = "Ubuntu" ]; then
   fi
 
   # Define the list of required repository packages, in roughly the order they should be installed
-  PACKAGES=( apt-transport-https ca-certificates curl \
-    software-properties-common pass vim git unzip libsecret-tools \
+  PACKAGES=( software-properties-common pass libsecret-tools \
     gnome-keyring docker-ce docker-compose )
 
   # Install base packages individually, instead of all together, so that we can check if they are
@@ -36,5 +35,15 @@ if [ "$(lsb_release -si)" = "Ubuntu" ]; then
   if [ -z "$(systemctl status docker | grep 'Active: active')" ]; then
     systemctl start docker
   fi
+
+  # TODO: fix credentials helper if image publishing is required
+  # Install docker credentials helper
+  #if [ -z "$(which docker-credentials-pass)" ]; then
+  #  wget https://github.com/docker/docker-credential-helpers/releases/download/v0.6.0/docker-credential-pass-v0.6.0-amd64.tar.gz
+  #  tar -xf docker-credential-pass-v0.6.0-amd64.tar.gz
+  #  rm docker-credentials-pass-v0.6.0-amd.tar.gz
+  #  chmod +x docker-credential-pass
+  #  mv docker-credential-pass /usr/local/bin/
+  #fi
 
 fi
