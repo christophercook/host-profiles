@@ -6,7 +6,7 @@ This repository stores environment configuration for my personal Linux and macOS
 
 ```sh
 git clone https://github.com/christophercook/host-profiles.git
-./setup
+./setup.sh
 ```
 
 ## Optional
@@ -14,5 +14,5 @@ git clone https://github.com/christophercook/host-profiles.git
 There is also a script to install Docker and a few dependencies for development purposes.
 
 ```sh
-./setup-dev-env
+./setup-docker.sh
 ```
