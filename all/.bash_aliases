@@ -27,8 +27,8 @@ if [ -n "$(which aws)" ]; then
       if [ -n "$AWS_ACCESS_KEY_ID" ] && [ -n "$AWS_SECRET_ACCESS_KEY" ]; then
         export AWS_ACCESS_KEY_ID
         export AWS_SECRET_ACCESS_KEY
-      else
-        echo "Warning: no aws credentials were found in the keyring for $AWS_PROFILE"
+      elif [ -f ~/.aws/credentials ] && [ -z $(grep "\[$AWS_PROFILE\]" ~/.aws/credentials) ]; then
+        echo "Warning: no aws credentials were found for $AWS_PROFILE"
       fi
     fi
   else
