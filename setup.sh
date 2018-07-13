@@ -41,7 +41,7 @@ if [ "$host" = "linux" ] && [ "$(lsb_release -si)" = "Ubuntu" ]; then
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ foreground-color 'rgb(211,215,207)'
 
     # set gedit color scheme to Monokai Extended
-    gsettings set org.gnome.gedit.preferences.editor scheme 'monokai-extended'
+    gsettings set org.gnome.gedit.preferences.editor scheme 'vsdark'
   fi
 
   # Define the list of required repository packages, in roughly the order they should be installed
