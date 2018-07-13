@@ -49,7 +49,8 @@ if [ "$host" = "linux" ] && [ "$(lsb_release -si)" = "Ubuntu" ]; then
   fi
 
   # Define the list of required repository packages, in roughly the order they should be installed
-  PACKAGES=( apt-transport-https ca-certificates curl vim git unzip vlc python-pip )
+  PACKAGES=( apt-transport-https ca-certificates curl vim git unzip vlc python-pip \
+              openvpn network-manager-openvpn-gnome )
 
   # Install base packages individually, instead of all together, so that we can check if they are
   # installed and skip if they are installed which reduces output messaging.
