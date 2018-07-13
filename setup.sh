@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if running as root
+if [ "$EUID" -eq 0 ]; then
+   echo "This script shouldn't be run as root"
+   exit 1
+fi
+
 # Rsync options
 #  * copy sub-directories
 #  * copy symlinks
@@ -43,9 +49,10 @@ if [ "$host" = "linux" ] && [ "$(lsb_release -si)" = "Ubuntu" ]; then
 
   # Install base packages individually, instead of all together, so that we can check if they are
   # installed and skip if they are installed which reduces output messaging.
+  echo "Preparing to install packages"
   for p in "${PACKAGES[@]}" ; do
     if [ "$(dpkg -s ${p} 2> /dev/null | grep 'Status: ')" != "Status: install ok installed" ]; then
-      apt-get -y install ${p}
+      sudo apt-get -y install ${p}
     fi
   done
 
