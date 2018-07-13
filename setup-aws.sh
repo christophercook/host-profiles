@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if running as root
+if [ "$EUID" -eq 0 ]; then
+   echo "This script shouldn't be run as root" 
+   exit 1
+fi
+
 # AWS access keys can be stored in the keyring and loaded into environment
 # variables to make it unneccessary to store them unencrypted in the awscli
 # configuration.
