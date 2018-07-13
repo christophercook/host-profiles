@@ -36,9 +36,13 @@ if [ "$host" = "linux" ] && [ "$(lsb_release -si)" = "Ubuntu" ]; then
 
     # set gnome terminal colors to tango dark scheme
     profileId=$(sed -e "s/'//g" <<<$(gsettings get org.gnome.Terminal.ProfilesList default))
-    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ use-theme-colors false    
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ use-theme-colors false
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ use-theme-transparency false
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ background-color 'rgb(46,52,54)'
     gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ foreground-color 'rgb(211,215,207)'
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ default-size-columns 120
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ default-size-rows 40
+    gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:$profileId/ audible-bell false
 
     # set gedit color scheme to Monokai Extended
     gsettings set org.gnome.gedit.preferences.editor scheme 'vsdark'
